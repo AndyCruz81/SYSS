@@ -6,26 +6,24 @@ export function EnvVarWarning() {
   return (
     <div className="flex gap-4 items-center">
       <Badge variant={"outline"} className="font-normal">
-        Supabase environment variables required
+        Variables de entorno no configuradas 
       </Badge>
       <div className="flex gap-2">
         <Button
           asChild
           size="sm"
           variant={"outline"}
-          disabled
-          className="opacity-75 cursor-none pointer-events-none"
+          className="opacity-75"
         >
-          <Link href="/sign-in">Sign in</Link>
+          <Link href="./sign-in">Iniciar Sesión</Link>
         </Button>
         <Button
           asChild
           size="sm"
           variant={"default"}
-          disabled
-          className="opacity-75 cursor-none pointer-events-none"
+          className="opacity-75"
         >
-          <Link href="/sign-up">Sign up</Link>
+          <Link href="./sign-up">Crear Cuenta</Link>
         </Button>
       </div>
     </div>

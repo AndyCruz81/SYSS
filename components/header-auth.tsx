@@ -21,7 +21,7 @@ export default async function AuthButton() {
               variant={"default"}
               className="font-normal pointer-events-none"
             >
-              Please update .env.local file with anon key and url
+              Porfavor actualiza el archivo .env.local con la clave anon y la url
             </Badge>
           </div>
           <div className="flex gap-2">
@@ -32,7 +32,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="/sign-in">Sign in</Link>
+              <Link href="./sign-in">Iniciar Sesion</Link>
             </Button>
             <Button
               asChild
@@ -41,7 +41,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="/sign-up">Sign up</Link>
+              <Link href="./sign-up">Crear Cuenta</Link>
             </Button>
           </div>
         </div>
@@ -50,20 +50,20 @@ export default async function AuthButton() {
   }
   return user ? (
     <div className="flex items-center gap-4">
-      Hey, {user.email}!
+      Hola, {user.email}!
       <form action={signOutAction}>
         <Button type="submit" variant={"outline"}>
-          Sign out
+          Cerrar sesión
         </Button>
       </form>
     </div>
   ) : (
     <div className="flex gap-2">
       <Button asChild size="sm" variant={"outline"}>
-        <Link href="/sign-in">Sign in</Link>
+        <Link href="./sign-in">Iniciar Sesión</Link>
       </Button>
       <Button asChild size="sm" variant={"default"}>
-        <Link href="/sign-up">Sign up</Link>
+        <Link href="./sign-up">Crear Cuenta</Link>
       </Button>
     </div>
   );
