@@ -1,43 +1,103 @@
+"use client"; // 👈 Importante para usar hooks en Next.js App Router
+
 import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation"; // ✅ Importa el hook correcto
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
-  const searchParams = await props.searchParams;
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams(); // ✅ Usa el hook para acceder a `searchParams` de forma segura
+
+  // Extrae los parámetros de búsqueda correctamente
+  const success = searchParams.get("success");
+  const error = searchParams.get("error");
+  const message = searchParams.get("message");
+
   return (
-    <form className="flex-1 flex flex-col min-w-64 bg-red-500">
-      <h1 className="text-2xl font-medium">Inicio de Sesión</h1>
-      <p className="text-sm text-foreground">
-        Don't have an account?{" "}
-        <Link className="text-foreground font-medium underline" href="/sign-up">
-          Sign up
-        </Link>
-      </p>
-      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-        <Label htmlFor="email">Email</Label>
-        <Input name="email" placeholder="you@example.com" required />
-        <div className="flex justify-between items-center">
-          <Label htmlFor="password">Password</Label>
+    <form className="w-full max-w-md bg-white dark:bg-background border border-gray-200 dark:border-zinc-800 rounded-xl shadow-md p-8 flex flex-col gap-6">
+      {/* Título */}
+      <div className="text-center">
+        <h1 className="text-3xl font-bold text-foreground">Inicio de Sesión</h1>
+        <p className="text-sm text-muted-foreground mt-2">
+          ¿No tienes una cuenta?{" "}
           <Link
-            className="text-xs text-foreground underline"
-            href="/forgot-password"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+            href="/auth/sign-up"
           >
-            Forgot Password?
+            Crear cuenta
+          </Link>
+        </p>
+      </div>
+
+      {/* Campo de Email */}
+      <div className="flex flex-col gap-1">
+        <Label htmlFor="email">Correo electrónico</Label>
+        <div className="relative">
+          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            id="email"
+            name="email"
+            placeholder="tucorreo@ejemplo.com"
+            required
+            autoComplete="email"
+            className="pl-10"
+          />
+        </div>
+      </div>
+
+      {/* Campo de Password con botón de mostrar */}
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">Contraseña</Label>
+          <Link
+            href="/auth/forgot-password"
+            className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            ¿Olvidaste tu contraseña?
           </Link>
         </div>
-        <Input
-          type="password"
-          name="password"
-          placeholder="Your password"
-          required
-        />
-        <SubmitButton pendingText="Signing In..." formAction={signInAction}>
-          Sign in
+        <div className="relative">
+          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="••••••••"
+            required
+            autoComplete="current-password"
+            className="pl-10 pr-10"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            aria-label="Mostrar u ocultar contraseña"
+          >
+            {showPassword ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Botón y mensaje */}
+      <div className="flex flex-col gap-3">
+        <SubmitButton pendingText="Iniciando sesión..." formAction={signInAction}>
+          Iniciar sesión
         </SubmitButton>
-        <FormMessage message={searchParams} />
+        
+        {/* ✅ Muestra los mensajes correctamente */}
+        {success && <FormMessage message={{ success }} />}
+        {error && <FormMessage message={{ error }} />}
+        {message && <FormMessage message={{ message }} />}
       </div>
     </form>
   );

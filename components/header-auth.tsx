@@ -32,7 +32,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="../sign-in">Iniciar Sesion</Link>
+              <Link href="/auth/sign-in">Iniciar Sesion</Link>
             </Button>
             <Button
               asChild
@@ -41,7 +41,7 @@ export default async function AuthButton() {
               disabled
               className="opacity-75 cursor-none pointer-events-none"
             >
-              <Link href="../sign-up">Crear Cuenta</Link>
+              <Link href="/auth/sign-up">Crear Cuenta</Link>
             </Button>
           </div>
         </div>
@@ -49,9 +49,13 @@ export default async function AuthButton() {
     );
   }
   return user ? (
+    console.log(user),
     <div className="flex items-center gap-4">
       Hola, {user.email}!
       <form action={signOutAction}>
+        <Button asChild size="sm" variant={"outline"}>
+        <Link href="/">Configuracion</Link>
+      </Button>
         <Button type="submit" variant={"outline"}>
           Cerrar sesión
         </Button>
@@ -60,10 +64,10 @@ export default async function AuthButton() {
   ) : (
     <div className="flex gap-2">
       <Button asChild size="sm" variant={"outline"}>
-        <Link href="../sign-in">Iniciar Sesión</Link>
+        <Link href="/auth/sign-in">Iniciar Sesión</Link>
       </Button>
       <Button asChild size="sm" variant={"default"}>
-        <Link href="../sign-up">Crear Cuenta</Link>
+        <Link href="/auth/sign-up">Crear Cuenta</Link>
       </Button>
     </div>
   );

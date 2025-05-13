@@ -1,0 +1,38 @@
+/* Definir colores base para el tema claro */
+:root {
+  --primary: 220, 90%, 50%; /* Azul intenso */
+  --primary-foreground: 220, 100%, 90%; /* Azul claro */
+  --secondary: 0, 85%, 55%; /* Rojo vibrante */
+  --secondary-foreground: 0, 100%, 85%; /* Rojo claro */
+
+  --background: 230, 20%, 95%; /* Fondo azul muy claro */
+  --foreground: 230, 90%, 20%; /* Texto oscuro */
+}
+
+/* Definir colores para el modo oscuro */
+.dark {
+  --primary: 220, 100%, 60%; /* Azul más fuerte */
+  --primary-foreground: 220, 100%, 85%; /* Azul claro */
+  --secondary: 0, 100%, 45%; /* Rojo oscuro */
+  --secondary-foreground: 0, 100%, 75%; /* Rojo más suave */
+
+  --background: 230, 15%, 10%; /* Fondo azul oscuro */
+  --foreground: 230, 100%, 90%; /* Texto claro */
+}
+
+/* Aplicar colores al fondo y al texto */
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Personalizar enlaces */
+a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+
+a:hover {
+  color: hsl(var(--secondary));
+  text-decoration: underline;
+}
