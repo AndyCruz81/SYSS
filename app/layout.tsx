@@ -31,12 +31,8 @@ export default function RootLayout({
     <html lang="es" className={geistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
 
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+
           <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
 
@@ -55,10 +51,8 @@ export default function RootLayout({
 
               <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
                 <p>
-                  Powered by{" "}
+                  Derechos Reservados{" "}
                   <a
-                    href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                    target="_blank"
                     className="font-bold hover:underline"
                     rel="noreferrer"
                   >
@@ -69,6 +63,7 @@ export default function RootLayout({
               </footer>
             </div>
           </main>
+          
         </ThemeProvider>
 
       </body>
