@@ -1,5 +1,5 @@
 import { EnvVarWarning } from "@/components/env-var-warning"; // Alerta si faltan variables de entorno
-import HeaderAuth from "@/components/header-auth"; // Sección de login/logout del header
+import HeaderAuth from "@/app/auth/auth-componets/header-auth"; // Sección de login/logout del header
 import { ThemeSwitcher } from "@/components/theme-switcher"; // Componente para cambiar tema claro/oscuro
 import { hasEnvVars } from "@/utils/supabase/check-env-vars"; // Verifica si están presentes las variables de entorno necesarias
 import { Geist } from "next/font/google"; // Tipografía "Geist" desde Google Fonts

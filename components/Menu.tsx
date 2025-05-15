@@ -19,30 +19,24 @@ export default async function Menu() {
   const { data, error } = await supabase
     .from("GLO_Menu")
     .select("*")
+    .eq("Estado", true)
     .order("Orden", { ascending: true });
 
   if (error) {
-    return (
-      <div className="text-destructive text-sm">
-        Error cargando el menú.
-      </div>
-    );
+    console.error("Error al cargar menú:", error.message);
+    return <div>Error cargando menú.</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>Menú vacío.</div>;
   }
 
   return (
     <nav className="flex flex-col gap-2">
-      {data?.map((item) => (
-        <Button
-          key={item.IdMenu}
-          variant="ghost"
-          asChild
-          className="justify-start gap-2 w-full text-left"
-        >
-          <Link href={item.Ruta}>
-            {iconMap[item.Icono?.toLowerCase()] ?? iconMap["menu"]}
-            <span>{item.Titulo}</span>
-          </Link>
-        </Button>
+      {data.map((item) => (
+        <Link href={item.Ruta} key={item.IdMenu}>
+          {item.Titulo}
+        </Link>
       ))}
     </nav>
   );
