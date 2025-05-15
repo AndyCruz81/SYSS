@@ -32,12 +32,16 @@ export default async function Menu() {
   }
 
   return (
-    <nav className="flex flex-col gap-2">
-      {data.map((item) => (
-        <Link href={item.Ruta} key={item.IdMenu}>
-          {item.Titulo}
-        </Link>
-      ))}
-    </nav>
-  );
+  <nav className="flex flex-col gap-2">
+    {data.map((item) => (
+      <Link
+        href={item.Ruta}
+        key={item.IdMenu}
+        className="px-4 py-2 rounded-md text-sm font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors duration-150"
+      >
+        {item.Titulo}
+      </Link>
+    ))}
+  </nav>
+);
 }

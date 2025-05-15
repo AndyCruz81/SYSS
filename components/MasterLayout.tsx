@@ -4,7 +4,7 @@ export default async function MasterLayout({ children }: { children: React.React
   return (
     <div className="flex min-h-screen">
       {/* Menú lateral */}
-      <aside className="w-64 bg-red-500 text-white p-4">
+      <aside className="w-64 bg-blue-500 text-white p-4">
         <Menu />
       </aside>
 

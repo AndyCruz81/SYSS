@@ -26,7 +26,13 @@ export default async function ProtectedPage() {
         </div>
       </div> */}
 
-
+      <div className="flex justify-center items-center mt-8 mb-4">
+        <img
+          src="/img/SYSS.png"
+          alt="SYSS company logo in blue and white, stylized text SYSS centered on a clean background, conveying a professional and modern tone"
+          className="h-24 w-auto"
+        />
+      </div>
       <div>
         <h2 className="font-bold text-2xl mb-4">Hola, ya estas dentro..</h2>
         {/* <FetchDataSteps /> **Ejemplos de Consultas a supabase*/}
