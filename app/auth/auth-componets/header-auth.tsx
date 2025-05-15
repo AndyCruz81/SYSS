@@ -1,8 +1,8 @@
-import { signOutAction } from "@/app/actions";
+import { signOutAction } from "@/app/auth/(auth-pages)/actions";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Badge } from "../../../components/ui/badge";
+import { Button } from "../../../components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function AuthButton() {
@@ -53,9 +53,6 @@ export default async function AuthButton() {
     <div className="flex items-center gap-4">
       Hola, {user.email}!
       <form action={signOutAction}>
-        <Button asChild size="sm" variant={"outline"}>
-        <Link href="/">Configuracion</Link>
-      </Button>
         <Button type="submit" variant={"outline"}>
           Cerrar sesión
         </Button>
