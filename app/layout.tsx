@@ -30,8 +30,8 @@ export default function RootLayout({
   return (
     <html lang="es" className={geistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
+         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> {/* Modo oscuro | Modo claro */}
 
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 
           <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -64,8 +64,8 @@ export default function RootLayout({
             </div>
           </main>
           
-        </ThemeProvider>
 
+        </ThemeProvider>
       </body>
     </html>
   );

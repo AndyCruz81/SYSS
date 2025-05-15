@@ -53,9 +53,6 @@ export default async function AuthButton() {
     <div className="flex items-center gap-4">
       Hola, {user.email}!
       <form action={signOutAction}>
-        <Button asChild size="sm" variant={"outline"}>
-        <Link href="/">Configuracion</Link>
-      </Button>
         <Button type="submit" variant={"outline"}>
           Cerrar sesión
         </Button>
