@@ -5,7 +5,6 @@ import { ClienteForm } from "@/components/dashboard/clientes/ClienteForm";
 import { ClienteList } from "@/components/dashboard/clientes/ClienteList";
 import { Cliente } from "@/types/cliente";
 import { Button } from "@/components/ui/button";
-import { GET } from "@/app/api/clientes/route";
 
 export default function ClientesPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -14,7 +13,7 @@ export default function ClientesPage() {
   useEffect(() => {
     const getClientes = async () => {
       try {
-        const res = await fetch("/api/clientes"); // 👈 ajusta esta URL si es diferente
+        const res = await fetch("/api/clientes");
         const data = await res.json();
         setClientes(data);
       } catch (error) {
