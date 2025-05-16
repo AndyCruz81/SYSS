@@ -9,22 +9,6 @@ export function EnvVarWarning() {
         Variables de entorno no configuradas 
       </Badge>
       <div className="flex gap-2">
-        <Button
-          asChild
-          size="sm"
-          variant={"outline"}
-          className="opacity-75"
-        >
-          <Link href="./sign-in">Iniciar Sesión</Link>
-        </Button>
-        <Button
-          asChild
-          size="sm"
-          variant={"default"}
-          className="opacity-75"
-        >
-          <Link href="./sign-up">Crear Cuenta</Link>
-        </Button>
       </div>
     </div>
   );

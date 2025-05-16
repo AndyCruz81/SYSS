@@ -49,7 +49,7 @@ export default async function AuthButton() {
     );
   }
   return user ? (
-    console.log(user),
+    // console.log(user),
     <div className="flex items-center gap-4">
       Hola, {user.email}!
       <form action={signOutAction}>

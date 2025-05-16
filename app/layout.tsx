@@ -1,10 +1,10 @@
-import { EnvVarWarning } from "@/components/env-var-warning"; // Alerta si faltan variables de entorno
-import HeaderAuth from "@/app/auth/auth-componets/header-auth"; // Sección de login/logout del header
-import { ThemeSwitcher } from "@/components/theme-switcher"; // Componente para cambiar tema claro/oscuro
-import { hasEnvVars } from "@/utils/supabase/check-env-vars"; // Verifica si están presentes las variables de entorno necesarias
+import Navbar from "@/components/nabvar"; // Componente de navegación 
+import Footer from "@/components/footer"; // Componente de pie de página
 import { Geist } from "next/font/google"; // Tipografía "Geist" desde Google Fonts
 import { ThemeProvider } from "next-themes"; // Permite cambiar tema (claro/oscuro)
-import Link from "next/link"; // Navegación con enlaces Next.js
+import { Toaster } from "sonner";
+import Logo from "@/components/ui/logo"; // Componente de logo
+
 import "./globals.css"; // Importa estilos globales CSS
 
 const defaultUrl = process.env.VERCEL_URL // Determina la URL base del sitio según si está en Vercel o en desarrollo local.
@@ -29,41 +29,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={geistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
-         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> {/* Modo oscuro | Modo claro */}
+      <body className="bg-background text-foreground h-screen">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> {/* Modo oscuro | Modo claro */}
 
+          <Toaster
+            position="top-right"
+            richColors
+            toastOptions={{
+              className: "backdrop-blur bg-white/80 dark:bg-zinc-900/80 rounded-lg",
+              style: {
+                background: "var(--foreground)",
+                color: "var(--background)",
+              },
+            }}
+          />
 
           <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
+              <Navbar />
 
-              <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-                <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                  <div className="flex gap-5 items-center font-semibold">
-                    <Link href={"/"}>SYSS</Link>
-                  </div>
-                  {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-                </div>
-              </nav>
-
-              <div className="flex flex-col gap-20 max-w-5xl p-5">
+              <div className="flex flex-col gap-20 max-w-5xl p-5 min-h-[400px] justify-center items-center">
                 {children}
               </div>
 
-              <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                <p>
-                  Derechos Reservados{" "}
-                  <a
-                    className="font-bold hover:underline"
-                    rel="noreferrer"
-                  >
-                    SYSS_DEV 0.1
-                  </a>
-                </p>
-                <ThemeSwitcher />
-              </footer>
+              <Footer />
+
             </div>
           </main>
-          
 
         </ThemeProvider>
       </body>

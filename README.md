@@ -10,6 +10,8 @@ Este proyecto es una aplicación web desarrollada con **Next.js 13+** usando la 
 - [PostCSS](https://postcss.org/)
 - [Node.js](https://nodejs.org/)
 - [Vercel](https://vercel.com/) (opcional para despliegue)
+- [sonner] sistema de notificaciones (toasts)
+- [nextjs-progressbar] loadings..
 
 ## 🗂️ Estructura del Proyecto
 /app
