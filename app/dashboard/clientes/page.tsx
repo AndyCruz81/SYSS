@@ -1,22 +1,34 @@
-'use client';
+"use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ClienteForm } from "@/components/dashboard/clientes/ClienteForm";
 import { ClienteList } from "@/components/dashboard/clientes/ClienteList";
 import { Cliente } from "@/types/cliente";
 import { Button } from "@/components/ui/button";
+import { GET } from "@/app/api/clientes/route";
 
 export default function ClientesPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [editingCliente, setEditingCliente] = useState<Cliente | null>(null);
 
+  useEffect(() => {
+    const getClientes = async () => {
+      try {
+        const res = await fetch("/api/clientes"); // 👈 ajusta esta URL si es diferente
+        const data = await res.json();
+        setClientes(data);
+      } catch (error) {
+        console.error("Error al obtener clientes:", error);
+      }
+    };
+    getClientes();
+  }, []);
+
   const handleAddOrUpdate = (cliente: Cliente) => {
     if (cliente.IdPersona) {
       // Actualizar cliente existente
       setClientes((prev) =>
-        prev.map((c) =>
-          c.IdPersona === cliente.IdPersona ? cliente : c
-        )
+        prev.map((c) => (c.IdPersona === cliente.IdPersona ? cliente : c))
       );
     } else {
       // Crear cliente nuevo
@@ -57,11 +69,7 @@ export default function ClientesPage() {
           onSubmit={handleAddOrUpdate}
         />
         {editingCliente && (
-          <Button
-            variant="ghost"
-            className="mt-2"
-            onClick={handleCancel}
-          >
+          <Button variant="ghost" className="mt-2" onClick={handleCancel}>
             Cancelar edición
           </Button>
         )}

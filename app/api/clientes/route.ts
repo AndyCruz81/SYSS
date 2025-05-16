@@ -1,5 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+import { createClient } from "@supabase/supabase-js";
+import { Console } from "console";
+import { NextResponse } from "next/server";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,8 +9,10 @@ const supabase = createClient(
 
 // GET: listar clientes
 export async function GET() {
-  const { data, error } = await supabase.from("clientes").select("*");
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  const { data, error } = await supabase.from("PER_Persona").select("*");
+  console.log(data);
+  if (error)
+    return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
 }
 
@@ -18,10 +21,8 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { data, error } = await supabase.from("clientes").insert([body]);
 
-
-  
-
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error)
+    return NextResponse.json({ error: error.message }, { status: 500 });
 
   if (!data) {
     return NextResponse.json(
