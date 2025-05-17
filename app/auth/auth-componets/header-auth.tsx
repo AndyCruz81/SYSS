@@ -1,71 +1,68 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { signOutAction } from "@/app/api/login/actions";
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import Link from "next/link";
 import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
-import { createClient } from "@/utils/supabase/server";
+import { cn } from "@/lib/utils";
+import { getAuthState } from "@/app/api/login/auth-state"; 
+import { User } from "@supabase/supabase-js"; // Asegúrate de importar `User`
 
-export default async function AuthButton() {
-  const supabase = await createClient();
+export default function AuthButton() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null); // ✅ Define el tipo correct
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  useEffect(() => {
+    async function fetchUser() {
+      const userData = await getAuthState();
+      setUser(userData);
+    }
+    fetchUser();
+  }, []);
 
   if (!hasEnvVars) {
     return (
-      <>
-        <div className="flex gap-4 items-center">
-          <div>
-            <Badge
-              variant={"default"}
-              className="font-normal pointer-events-none"
-            >
-              Porfavor actualiza el archivo .env.local con la clave anon y la url
-            </Badge>
-          </div>
-          <div className="flex gap-2">
-            <Button
-              asChild
-              size="sm"
-              variant={"outline"}
-              disabled
-              className="opacity-75 cursor-none pointer-events-none"
-            >
-              <Link href="/auth/sign-in">Iniciar Sesion</Link>
-            </Button>
-            <Button
-              asChild
-              size="sm"
-              variant={"default"}
-              disabled
-              className="opacity-75 cursor-none pointer-events-none"
-            >
-              <Link href="/auth/sign-up">Crear Cuenta</Link>
-            </Button>
-          </div>
-        </div>
-      </>
+      <Badge variant="default" className="font-normal pointer-events-none">
+        Por favor, actualiza el archivo .env.local con la clave anon y la url
+      </Badge>
     );
   }
-  return user ? (
-    // console.log(user),
-    <div className="flex items-center gap-4">
-      Hola, {user.email}!
-      <form action={signOutAction}>
-        <Button type="submit" variant={"outline"}>
-          Cerrar sesión
-        </Button>
-      </form>
-    </div>
-  ) : (
-    <div className="flex gap-2">
-      <Button asChild size="sm" variant={"outline"}>
-        <Link href="/auth/sign-in">Iniciar Sesión</Link>
+
+  return (
+    <div className="relative">
+      <Button
+        onClick={() => setMenuOpen(!menuOpen)}
+        className="sm:hidden p-2 border border-foreground/20 rounded-md"
+      >
+        ☰
       </Button>
-      <Button asChild size="sm" variant={"default"}>
-        <Link href="/auth/sign-up">Crear Cuenta</Link>
-      </Button>
+
+      <div
+        className={cn(
+          "flex gap-2",
+          menuOpen ? "flex flex-col absolute top-10 right-4 bg-background rounded-md shadow-lg p-4 w-[200px]" : "hidden sm:flex"
+        )}
+      >
+        {user ? (
+          <div className="flex items-center gap-4">
+            <span>Hola, {user?.email && <span>{user.email}</span>}</span>
+            <form action={signOutAction}>
+              <Button type="submit" variant="outline">Cerrar sesión</Button>
+            </form>
+          </div>
+        ) : (
+          <>
+            <Button asChild size="sm" variant="outline">
+              <Link href="/auth/sign-in">Iniciar Sesión</Link>
+            </Button>
+            <Button asChild size="sm" variant="default">
+              <Link href="/auth/sign-up">Crear Cuenta</Link>
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

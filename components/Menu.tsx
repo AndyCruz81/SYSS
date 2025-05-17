@@ -1,47 +1,43 @@
-import React from "react";
+"use client";
+
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/server";
-import { cn } from "@/lib/utils"; // si tenés el util para combinar clases
-import { Button } from "@/components/ui/button";
-import { Home, Users, BarChart2, MenuIcon } from "lucide-react"; // íconos de ejemplo
+import { useMenus } from "@/components/hooks/useMenus";
 
-// Íconos mapeables (en base al nombre desde DB)
-const iconMap: Record<string, React.ReactElement> = {
-  dashboard: <Home size={16} />,
-  clientes: <Users size={16} />,
-  reportes: <BarChart2 size={16} />,
-  menu: <MenuIcon size={16} />,
-};
+export default function Menu() {
+  const { menus, loading } = useMenus();
 
-export default async function Menu() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("GLO_Menu")
-    .select("*")
-    .eq("Estado", true)
-    .order("Orden", { ascending: true });
-
-  if (error) {
-    console.error("Error al cargar menú:", error.message);
-    return <div>Error cargando menú.</div>;
-  }
-
-  if (!data || data.length === 0) {
-    return <div>Menú vacío.</div>;
+  if (loading) {
+    return <p className="text-sm text-muted">Cargando menú...</p>;
   }
 
   return (
-  <nav className="flex flex-col gap-2">
-    {data.map((item) => (
-      <Link
-        href={item.Ruta}
-        key={item.IdMenu}
-        className="px-4 py-2 rounded-md text-sm font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors duration-150"
-      >
-        {item.Titulo}
-      </Link>
-    ))}
-  </nav>
-);
+    <nav className="flex flex-col gap-6">
+      {menus.map((menu) => (
+        <div key={menu.IdMenu}>
+          <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-muted-foreground">
+            {menu.Icono && (
+              <span
+                className="inline-block"
+                dangerouslySetInnerHTML={{ __html: menu.Icono }}
+              />
+            )}
+            {menu.Titulo}
+          </div>
+
+          <ul className="ml-4 mt-2 space-y-1">
+            {menu.SubMenus?.filter((s) => s.Estado).map((item) => (
+              <li key={item.IdSubMenu}>
+                <Link
+                  href={item.Ruta}
+                  className="block px-2 py-1 rounded hover:bg-muted text-sm"
+                >
+                  {item.Titulo}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  );
 }

@@ -1,5 +1,6 @@
 'use client';
-
+// Permite crear un componente de logo con un tamaño y color opcionales.
+// Este componente es útil para mostrar el logo de la aplicación en diferentes tamaños y colores según sea necesario
 import { toast } from 'sonner';
 import { CheckCircle, AlertTriangle, XCircle, Info } from 'lucide-react';
 

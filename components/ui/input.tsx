@@ -1,6 +1,8 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
+
+// Permite crear un componente de entrada reutilizable con estilos personalizados.
+// Este componente es útil para manejar entradas de texto en formularios y otras interacciones de usuario.
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}

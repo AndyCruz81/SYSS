@@ -1,4 +1,16 @@
 "use client";
+// Permite crear un menú desplegable utilizando Radix UI.
+// Este componente es útil para crear menús contextuales o de navegación con opciones personalizadas.
+// ejemplo de uso:
+{/* <DropdownMenu> 
+        <DropdownMenuTrigger>Menu</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Opción 1</DropdownMenuItem>
+          <DropdownMenuItem>Opción 2</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>    */}
+// Este componente utiliza Radix UI para crear un menú desplegable accesible y personalizable.
+// Permite crear un menú desplegable utilizando Radix UI.
 
 import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
