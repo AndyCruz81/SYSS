@@ -13,21 +13,21 @@ interface ClienteFormProps {
 export function ClienteForm({ initialData, onSubmit }: ClienteFormProps) {
   const [formData, setFormData] = useState<Cliente>({
     IdPersona: initialData?.IdPersona || 0,
-    IdTipoPersona: initialData?.IdTipoPersona || 0,
+    IdTipoPersona: initialData?.IdTipoPersona || 1,
     PrimerNombre: initialData?.PrimerNombre || '',
     SegundoNombre: initialData?.SegundoNombre || '',
     PrimerApellido: initialData?.PrimerApellido || '',
     SegundoApellido: initialData?.SegundoApellido || '',
-    IdGenero: initialData?.IdGenero || 0,
-    IdEstadoCivil: initialData?.IdEstadoCivil || 0,
+    IdGenero: initialData?.IdGenero || 1,
+    IdEstadoCivil: initialData?.IdEstadoCivil || 1,
     FechaNacimiento: initialData?.FechaNacimiento || '',
-    IdNacionalidad: initialData?.IdNacionalidad || 0,
+    IdNacionalidad: initialData?.IdNacionalidad || 1,
     Identificacion: initialData?.Identificacion || '',
-    IdTipoDocumento: initialData?.IdTipoDocumento || 0,
+    IdTipoDocumento: initialData?.IdTipoDocumento || 1,
     CorreoElectronico: initialData?.CorreoElectronico || '',
     Telefono: initialData?.Telefono || '',
     FechaCreacion: initialData?.FechaCreacion || '',
-    UsuarioCreacion: initialData?.UsuarioCreacion || 0,
+    UsuarioCreacion: initialData?.UsuarioCreacion || 1,
   });
 
   const handleChange = (field: keyof Cliente, value: string) => {

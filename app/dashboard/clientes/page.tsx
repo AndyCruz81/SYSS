@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ClienteForm } from "@/components/dashboard/clientes/ClienteForm";
 import { ClienteList } from "@/components/dashboard/clientes/ClienteList";
 import { Cliente } from "@/types/cliente";
@@ -10,45 +10,70 @@ export default function ClientesPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [editingCliente, setEditingCliente] = useState<Cliente | null>(null);
 
+  const fetchClientes = async () => {
+    try {
+      const res = await fetch("/api/clientes");
+      const data = await res.json();
+      setClientes(data);
+    } catch (err) {
+      console.error("Error al cargar datos de clientes:", err);
+    }
+  };
+
   useEffect(() => {
-    const getClientes = async () => {
-      try {
-        const res = await fetch("/api/clientes");
-        const data = await res.json();
-        setClientes(data);
-      } catch (error) {
-        console.error("Error al obtener clientes:", error);
-      }
-    };
-    getClientes();
+    fetchClientes();
   }, []);
 
-  const handleAddOrUpdate = (cliente: Cliente) => {
-    if (cliente.IdPersona) {
-      // Actualizar cliente existente
-      setClientes((prev) =>
-        prev.map((c) => (c.IdPersona === cliente.IdPersona ? cliente : c))
-      );
-    } else {
-      // Crear cliente nuevo
-      const nuevoCliente = {
-        ...cliente,
-        IdCliente: Date.now(), // ID temporal, idealmente generado por el backend
-      };
-      setClientes((prev) => [...prev, nuevoCliente]);
+  
+  
+  const handleAddOrUpdate = async (cliente: Cliente) => {
+    const method = cliente.IdPersona ? "PUT" : "POST";
+    const url = cliente.IdPersona
+      ? `/api/clientes/${cliente.IdPersona}`
+      : "/api/clientes";
+
+    const createCliente:  Partial<Cliente> = { ...cliente };
+
+    if (!cliente.IdPersona) {
+      delete createCliente.IdPersona;
     }
+
+    if (!cliente.FechaCreacion || cliente.FechaCreacion.trim() === "") {
+      createCliente.FechaCreacion = new Date().toISOString().split('T')[0]; 
+    }
+
+    console.log(url);
+
+    const res = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(createCliente),
+    });
+
+    if (!res.ok) {
+      return;
+    }
+  
+    fetchClientes();
     setEditingCliente(null);
   };
-
+  
+  const handleDelete = async (id: number) => {
+    const res = await fetch(`/api/clientes/${id}`, {
+      method: "DELETE",
+    });
+  
+    if (!res.ok) {
+      console.error("Error eliminando cliente");
+      return;
+    }
+  
+    fetchClientes();
+    if (editingCliente?.IdPersona === id) setEditingCliente(null);
+  };
+  
   const handleEdit = (cliente: Cliente) => {
     setEditingCliente(cliente);
-  };
-
-  const handleDelete = (id: number) => {
-    setClientes((prev) => prev.filter((c) => c.IdPersona !== id));
-    if (editingCliente?.IdPersona === id) {
-      setEditingCliente(null);
-    }
   };
 
   const handleCancel = () => {

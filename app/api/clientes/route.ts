@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import { Console } from "console";
 import { NextResponse } from "next/server";
 
 const supabase = createClient(
@@ -19,10 +18,12 @@ export async function GET() {
 // POST: crear cliente
 export async function POST(req: Request) {
   const body = await req.json();
-  const { data, error } = await supabase.from("clientes").insert([body]);
+  const { data, error } = await supabase.from("PER_Persona").insert([body]);
 
-  if (error)
+  if (error){
+    console.log(NextResponse.json({ error: error.message }, { status: 500 }));
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }  
 
   if (!data) {
     return NextResponse.json(
