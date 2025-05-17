@@ -1,6 +1,6 @@
 "use client"; // 👈 Importante para usar hooks en Next.js App Router
 
-import { forgotPasswordAction } from "@/app/auth/(auth-pages)/actions";
+import { forgotPasswordAction } from "@/app/api/login/actions";
 import { FormMessage } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
